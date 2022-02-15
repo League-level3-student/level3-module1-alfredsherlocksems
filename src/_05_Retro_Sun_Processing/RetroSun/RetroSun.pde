@@ -1,4 +1,6 @@
 color bgColor = color(31, 0, 48);
+float y;
+float h;
 
 // RGB colors
 color[] sunColors = {
@@ -16,13 +18,15 @@ color[] sunColors = {
 
 void setup() {
   // 1. Set the size of your sketch
-  
+  size(800, 800);
+  y = width / 2.4;
+  h = 75;
 }
 
 
 void draw() {
   // 2. Draw the bgColor background color
-
+  background(bgColor);
   /*
    * PART 1: Drawing the sun
    */
@@ -30,7 +34,10 @@ void draw() {
   // Draw an ellipse for the sun in the center of the window
   // Use fill(sunColors[0]) to make it yellow
   // Use noStroke() to remove the black outline
-
+imageMode(CENTER);
+fill(sunColors[0]);
+ellipse(400, 250, 400, 400);
+noStroke();
   // Do you see a yellow sun like in the 1st image?
   // If not, fix your code before proceeding.
 
@@ -44,8 +51,17 @@ void draw() {
   // Call the loadPixels() method to put all the pixel colors into
   // the pixels[] array
   // https://processing.org/reference/loadPixels_.html
-
+  loadPixels();
   // Loop through all the pixels in your window.
+  for(int i = 0; i < 640000; i++) {
+    if(pixels[i] == sunColors[0]) {
+      int y = i/width;
+      float step = map(y, 50, 450, 0, 1);
+      int c = interpolateColor(sunColors, step);
+      pixels[i] = c;
+    }
+  }
+  updatePixels();
   // By default, a pixel is a 1x1 colored square, so if the window width is 600 
   // and the height is 400 (600x400), then there are 600 * 400 = 240,000 pixels 
 
@@ -82,20 +98,30 @@ void draw() {
    */
 
   // Set the fill color to the background color
-
+  fill(bgColor);
   // To draw each rectangle we need to find its x, y, width, height
   // *The y position can be any value within the sun:
   //   float y = width / 2;
+  
   // *The height can be any value you choose:
   //   float h = 40;
+
   // *The x position can be the center of the sun's x position minus the radius:
   //   float x = sunCenterX - sunRadius
+  float x = 200;
   // * The width can be 2 times the radius
   //   float w = 2 * sunRadius
-
+  float w = 400;
   // Do you see a section missing from the sun like in the 3rd image?
-
-
+  rect(x, y, w, h);
+if (y < 50) {
+   y = width / 2.4;
+   h = 75;
+}
+else {
+  y-=.8;
+  h-=.25;
+}
   /*
    * PART 4: Moving the missing sun sections
    *
@@ -104,6 +130,8 @@ void draw() {
    */
 
   // Decrease the y variable of the rectangular section created in PART 3.
+
+
   // If there isn't a variable, declare a float variable OUTSIDE of the
   // draw function AND initialize it in the setup() function.
 
@@ -134,7 +162,7 @@ void draw() {
   // code you wrote for the 1 missing sun section.
   // *HINT* You can use the Rectangle class defined below to create
   //        a list of Rectangles.
-
+Rectangle[] rects = new Rectangle[5];
 
   /*
    * PART 6: Adding extras
