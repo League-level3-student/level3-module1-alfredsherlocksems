@@ -1,5 +1,7 @@
 package _07_Meeting_Scheduler;
 
+import java.util.HashMap;
+
 public class MeetingScheduler {
     /*
      * Your task is to code a method to find a meeting time for two people
@@ -22,7 +24,7 @@ public class MeetingScheduler {
      * Assume both schedules are in the same time zones
      */
     public static Schedule getMutualAvailability(Schedule person1, Schedule person2) {
-        
+        HashMap<String, Integer> times = new HashMap<String, Integer>();
         return null;
     }
 }

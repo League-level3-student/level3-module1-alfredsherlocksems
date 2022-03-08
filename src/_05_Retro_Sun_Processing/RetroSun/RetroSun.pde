@@ -113,7 +113,11 @@ noStroke();
   //   float w = 2 * sunRadius
   float w = 400;
   // Do you see a section missing from the sun like in the 3rd image?
-  rect(x, y, w, h);
+  Rectangle[] rects = new Rectangle[3];
+  rects[0] = new Rectangle (x, y, w, h);
+  rects[1] = new Rectangle(x, y + 100, w, h - 50);
+  rects[2] = new Rectangle(x, y + 200, w, h - 89);
+  
 if (y < 50) {
    y = width / 2.4;
    h = 75;
@@ -162,7 +166,7 @@ else {
   // code you wrote for the 1 missing sun section.
   // *HINT* You can use the Rectangle class defined below to create
   //        a list of Rectangles.
-Rectangle[] rects = new Rectangle[5];
+
 
   /*
    * PART 6: Adding extras
@@ -202,5 +206,6 @@ class Rectangle {
     this.y = y;
     this.w = w;
     this.h = h;
+    rect(x, y, w, h);
   }
 }
