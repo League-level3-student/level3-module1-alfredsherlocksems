@@ -1,6 +1,13 @@
 package _08_California_Weather;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /*
  * OBJECTIVE:
@@ -27,19 +34,51 @@ import java.util.HashMap;
  * temperature, you can get a free API key at: https://openweathermap.org/api
  */
 
-public class CaliforniaWeather {
-    
+public class CaliforniaWeather implements ActionListener {
+    JFrame frame = new JFrame();
+    JPanel panel = new JPanel();
+    JButton b1 = new JButton();
+    JButton b2 = new JButton();
+    JButton b3 = new JButton();
     void start() {
-        HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
         
-        // All city keys have the first letter capitalized of each word
-        String cityName = Utilities.capitalizeWords( "National City" );
-        WeatherData datum = weatherData.get(cityName);
+        frame.setSize(800, 500);
+        frame.setVisible(true);
+        frame.add(panel);
+        b1.addActionListener(this);
+        b2.addActionListener(this);
+        b3.addActionListener(this);
+        panel.add(b1);
+        panel.add(b2);
+        panel.add(b3);
         
-        if( datum == null ) {
-            System.out.println("Unable to find weather data for: " + cityName);
-        } else {
-            System.out.println(cityName + " is " + datum.weatherSummary + " with a temperature of " + datum.temperatureF + " F");
-        }
     }
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+		HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
+		
+		if (arg0.getSource() == b1) {
+			String city = new JOptionPane().showInputDialog("What city would you like the weather for?");
+			 // All city keys have the first letter capitalized of each word
+			String cityName = Utilities.capitalizeWords(city);
+	        WeatherData datum = weatherData.get(cityName);
+			
+	        if( datum == null ) {
+				System.out.println("Unable to find weather data for: " + cityName);
+		    } 
+			else {
+			    double temp = (datum.temperatureF - 32) * 5/9;
+			    float t = Math.round(temp);
+				System.out.println(cityName + " is " + datum.weatherSummary + " with a temperature of " + t + " Celsius");
+		    }
+		}
+		else if (arg0.getSource() == b2) {
+			String weather = new JOptionPane().showInputDialog("Type in a weather type.");
+			
+		}
+        
+      
+	}
 }
